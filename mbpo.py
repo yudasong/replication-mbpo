@@ -11,12 +11,13 @@ from model import Ensemble_Model
 from predict_env import PredictEnv
 from sample_env import EnvSampler
 from tf_models.constructor import construct_model, format_samples_for_training
+from partial_envs import make_env
 
 def readParser():
     parser = argparse.ArgumentParser(description='MBPO')
     parser.add_argument('--env-name', default="Hopper-v2",
         help='Mujoco Gym environment (default: Hopper-v2)')
-    parser.add_argument('--seed', type=int, default=123456, metavar='N',
+    parser.add_argument('--seed', type=int, default=1234, metavar='N',
         help='random seed (default: 123456)')
 
 
@@ -66,7 +67,7 @@ def readParser():
                     help='rollout min length')
     parser.add_argument('--rollout_max_length', type=int, default=15, metavar='A',
                     help='rollout max length')
-    parser.add_argument('--num_epoch', type=int, default=1000, metavar='A',
+    parser.add_argument('--num_epoch', type=int, default=200, metavar='A',
                     help='total number of epochs')
     parser.add_argument('--min_pool_size', type=int, default=1000, metavar='A',
                     help='minimum pool size')
@@ -227,7 +228,7 @@ def main():
     args = readParser()
 
     # Initial environment
-    env = gym.make(args.env_name)
+    env = make_env(args.env_name)
 
     # Set random seed
     torch.manual_seed(args.seed)

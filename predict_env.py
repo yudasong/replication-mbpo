@@ -20,7 +20,7 @@ class PredictEnv:
             done = ~not_done
             done = done[:,None]
             return done
-        elif env_name == "Walker2d-v2":
+        elif env_name == "FixedWalker":
             assert len(obs.shape) == len(next_obs.shape) == len(act.shape) == 2
 
             height = next_obs[:, 0]
@@ -32,6 +32,7 @@ class PredictEnv:
             done = ~not_done
             done = done[:,None]
             return done
+            
 
     def _get_logprob(self, x, means, variances):
 
